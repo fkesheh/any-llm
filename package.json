@@ -2,6 +2,14 @@
   "name": "any-llm",
   "version": "0.1.0",
   "description": "A seamless typescript abstraction layer between your application and various Language Learning Model (LLM) providers.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fkesheh/any-llm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fkesheh/any-llm/issues"
+  },
+  "homepage": "https://github.com/fkesheh/any-llm#readme",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
