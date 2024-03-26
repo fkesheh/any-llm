@@ -8,6 +8,7 @@ import {
 } from '@util/types'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
+import { Stream } from 'openai/streaming'
 import { ChatClientBase } from '../ChatClientBase'
 import { OpenAIChatClient } from './OpenAIChatClient'
 
@@ -28,7 +29,7 @@ export class PerplexityChatClient extends ChatClientBase {
   async generateChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
-  ): Promise<any> {
+  ): Promise<Stream<OpenAI.Chat.Completions.ChatCompletionChunk>> {
     if (!this.perplexity) {
       throw new Error('Perplexity client is not initialized')
     }

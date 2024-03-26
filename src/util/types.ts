@@ -1,14 +1,15 @@
-export type ModelProvider =
-  | 'openai'
-  | 'google'
-  | 'anthropic'
-  | 'mistral'
-  | 'groq'
-  | 'perplexity'
-  | 'ollama'
-  | 'openrouter'
-  | 'cohere'
-  | 'azure'
+export enum ModelProvider {
+  OpenAI = 'openai',
+  Google = 'google',
+  Anthropic = 'anthropic',
+  Mistral = 'mistral',
+  Groq = 'groq',
+  Perplexity = 'perplexity',
+  Ollama = 'ollama',
+  OpenRouter = 'openrouter',
+  Cohere = 'cohere',
+  Azure = 'azure',
+}
 
 export type LLMID =
   | OpenAILLMID
@@ -128,22 +129,20 @@ export interface TextPart {
 }
 
 export interface ImagePart {
-  source: ImagePart.Source
+  source: ImagePartSource
   type?: 'image'
 }
 
-export namespace ImagePart {
-  export interface Source {
-    data: string
-    media_type: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
-    type?: 'base64'
-  }
+export interface ImagePartSource {
+  data: string
+  media_type: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
+  type?: 'base64'
 }
 
 export type ChatMessage =
   | SystemChatMessage
   | UserChatMessage
-  | assistantChatMessage
+  | AssistantChatMessage
 
 export interface SystemChatMessage {
   content: string
@@ -155,7 +154,7 @@ export interface UserChatMessage {
   role: ChatRoles.User
 }
 
-export interface assistantChatMessage {
+export interface AssistantChatMessage {
   content: string | Array<TextPart | ImagePart>
   role: ChatRoles.Assistant
 }

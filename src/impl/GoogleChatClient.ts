@@ -53,7 +53,7 @@ export class GoogleChatClient extends ChatClientBase {
   async generateChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
-  ): Promise<any> {
+  ): Promise<ReadableStream> {
     if (!this.googleAI) {
       throw new Error('Google AI client is not initialized')
     }
@@ -90,7 +90,7 @@ export class GoogleChatClient extends ChatClientBase {
 
   async generateChatCompletionStream(
     chatSettings: LLMSettings,
-    messages: any[],
+    messages: ChatMessage[],
   ): Promise<StreamingTextResponse> {
     const chat = await this.generateChatCompletion(chatSettings, messages)
     return new StreamingTextResponse(chat)

@@ -1,4 +1,4 @@
-import { LLM } from '@util/types'
+import { LLM, ModelProvider } from '@util/types'
 
 const GOOGLE_PLATFORM_LINK = 'https://ai.google.dev/'
 
@@ -8,7 +8,7 @@ const GOOGLE_PLATFORM_LINK = 'https://ai.google.dev/'
 const GEMINI_PRO: LLM = {
   modelId: 'gemini-pro',
   modelName: 'Gemini Pro',
-  provider: 'google',
+  provider: ModelProvider.Google,
   platformLink: GOOGLE_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -21,7 +21,7 @@ const GEMINI_PRO: LLM = {
 const GEMINI_PRO_VISION: LLM = {
   modelId: 'gemini-pro-vision',
   modelName: 'Gemini Pro Vision',
-  provider: 'google',
+  provider: ModelProvider.Google,
   platformLink: GOOGLE_PLATFORM_LINK,
   imageInput: true,
   minTemperature: 0.0,

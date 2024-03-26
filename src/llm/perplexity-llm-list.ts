@@ -1,4 +1,4 @@
-import { LLM } from '@util/types'
+import { LLM, ModelProvider } from '@util/types'
 
 const PERPLEXITY_PLATORM_LINK =
   'https://docs.perplexity.ai/docs/getting-started'
@@ -7,7 +7,7 @@ const PERPLEXITY_PLATORM_LINK =
 const MIXTRAL_8X7B_INSTRUCT: LLM = {
   modelId: 'mixtral-8x7b-instruct',
   modelName: 'Mixtral 8x7B Instruct',
-  provider: 'perplexity',
+  provider: ModelProvider.Perplexity,
   platformLink: PERPLEXITY_PLATORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -20,7 +20,7 @@ const MIXTRAL_8X7B_INSTRUCT: LLM = {
 const MISTRAL_7B_INSTRUCT: LLM = {
   modelId: 'mistral-7b-instruct',
   modelName: 'Mistral 7B Instruct',
-  provider: 'perplexity',
+  provider: ModelProvider.Perplexity,
   platformLink: PERPLEXITY_PLATORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -33,7 +33,7 @@ const MISTRAL_7B_INSTRUCT: LLM = {
 const CODELLAMA_70B_INSTRUCT: LLM = {
   modelId: 'codellama-70b-instruct',
   modelName: 'CodeLlama 70B Instruct',
-  provider: 'perplexity',
+  provider: ModelProvider.Perplexity,
   platformLink: PERPLEXITY_PLATORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -46,7 +46,7 @@ const CODELLAMA_70B_INSTRUCT: LLM = {
 const PERPLEXITY_SONAR_SMALL_CHAT_7B: LLM = {
   modelId: 'sonar-small-chat',
   modelName: 'Sonar Small Chat',
-  provider: 'perplexity',
+  provider: ModelProvider.Perplexity,
   platformLink: PERPLEXITY_PLATORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -59,7 +59,7 @@ const PERPLEXITY_SONAR_SMALL_CHAT_7B: LLM = {
 const PERPLEXITY_SONAR_SMALL_ONLINE_7B: LLM = {
   modelId: 'sonar-small-online',
   modelName: 'Sonar Small Online',
-  provider: 'perplexity',
+  provider: ModelProvider.Perplexity,
   platformLink: PERPLEXITY_PLATORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -72,7 +72,7 @@ const PERPLEXITY_SONAR_SMALL_ONLINE_7B: LLM = {
 const PERPLEXITY_SONAR_MEDIUM_CHAT_8x7B: LLM = {
   modelId: 'sonar-medium-chat',
   modelName: 'Sonar Medium Chat',
-  provider: 'perplexity',
+  provider: ModelProvider.Perplexity,
   platformLink: PERPLEXITY_PLATORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -85,7 +85,7 @@ const PERPLEXITY_SONAR_MEDIUM_CHAT_8x7B: LLM = {
 const PERPLEXITY_SONAR_MEDIUM_ONLINE_8x7B: LLM = {
   modelId: 'sonar-medium-online',
   modelName: 'Sonar Medium Online',
-  provider: 'perplexity',
+  provider: ModelProvider.Perplexity,
   platformLink: PERPLEXITY_PLATORM_LINK,
   imageInput: false,
   minTemperature: 0.0,

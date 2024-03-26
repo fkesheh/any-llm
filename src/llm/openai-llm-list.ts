@@ -1,4 +1,4 @@
-import { LLM } from '@util/types'
+import { LLM, ModelProvider } from '@util/types'
 
 const OPENAI_PLATORM_LINK = 'https://platform.openai.com/docs/overview'
 
@@ -8,7 +8,7 @@ const OPENAI_PLATORM_LINK = 'https://platform.openai.com/docs/overview'
 const GPT4Turbo: LLM = {
   modelId: 'gpt-4-turbo-preview',
   modelName: 'GPT-4 Turbo',
-  provider: 'openai',
+  provider: ModelProvider.OpenAI,
   platformLink: OPENAI_PLATORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -21,7 +21,7 @@ const GPT4Turbo: LLM = {
 const GPT4Vision: LLM = {
   modelId: 'gpt-4-vision-preview',
   modelName: 'GPT-4 Vision',
-  provider: 'openai',
+  provider: ModelProvider.OpenAI,
   platformLink: OPENAI_PLATORM_LINK,
   imageInput: true,
   minTemperature: 0.0,
@@ -34,7 +34,7 @@ const GPT4Vision: LLM = {
 const GPT4: LLM = {
   modelId: 'gpt-4',
   modelName: 'GPT-4',
-  provider: 'openai',
+  provider: ModelProvider.OpenAI,
   platformLink: OPENAI_PLATORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -47,7 +47,7 @@ const GPT4: LLM = {
 const GPT3_5Turbo: LLM = {
   modelId: 'gpt-3.5-turbo',
   modelName: 'GPT-3.5 Turbo',
-  provider: 'openai',
+  provider: ModelProvider.OpenAI,
   platformLink: OPENAI_PLATORM_LINK,
   imageInput: false,
   minTemperature: 0.0,

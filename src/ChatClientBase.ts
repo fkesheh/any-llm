@@ -1,14 +1,9 @@
 import { ApiError } from '@util/api-error'
-import { ApiKeyValues, ChatMessage, LLM, LLMSettings } from '@util/types'
+import { ApiKeyValues, ChatMessage, LLMSettings } from '@util/types'
 import { StreamingTextResponse } from 'ai'
 
 export abstract class ChatClientBase {
   abstract initialize(apiKeyValues: ApiKeyValues): Promise<void>
-
-  abstract generateChatCompletion(
-    chatSettings: LLMSettings,
-    messages: ChatMessage[],
-  ): Promise<any>
 
   abstract generateChatCompletionStream(
     chatSettings: LLMSettings,

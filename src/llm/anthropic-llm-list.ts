@@ -1,4 +1,4 @@
-import { LLM } from '@util/types'
+import { LLM, ModelProvider } from '@util/types'
 
 const ANTHROPIC_PLATFORM_LINK =
   'https://docs.anthropic.com/claude/reference/getting-started-with-the-api'
@@ -9,7 +9,7 @@ const ANTHROPIC_PLATFORM_LINK =
 const CLAUDE_2: LLM = {
   modelId: 'claude-2.1',
   modelName: 'Claude 2',
-  provider: 'anthropic',
+  provider: ModelProvider.Anthropic,
   platformLink: ANTHROPIC_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -22,7 +22,7 @@ const CLAUDE_2: LLM = {
 const CLAUDE_INSTANT: LLM = {
   modelId: 'claude-instant-1.2',
   modelName: 'Claude Instant',
-  provider: 'anthropic',
+  provider: ModelProvider.Anthropic,
   platformLink: ANTHROPIC_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -35,7 +35,7 @@ const CLAUDE_INSTANT: LLM = {
 const CLAUDE_3_HAIKU: LLM = {
   modelId: 'claude-3-haiku-20240307',
   modelName: 'Claude 3 Haiku',
-  provider: 'anthropic',
+  provider: ModelProvider.Anthropic,
   platformLink: ANTHROPIC_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -48,7 +48,7 @@ const CLAUDE_3_HAIKU: LLM = {
 const CLAUDE_3_SONNET: LLM = {
   modelId: 'claude-3-sonnet-20240229',
   modelName: 'Claude 3 Sonnet',
-  provider: 'anthropic',
+  provider: ModelProvider.Anthropic,
   platformLink: ANTHROPIC_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -61,7 +61,7 @@ const CLAUDE_3_SONNET: LLM = {
 const CLAUDE_3_OPUS: LLM = {
   modelId: 'claude-3-opus-20240229',
   modelName: 'Claude 3 Opus',
-  provider: 'anthropic',
+  provider: ModelProvider.Anthropic,
   platformLink: ANTHROPIC_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,

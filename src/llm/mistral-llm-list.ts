@@ -1,4 +1,4 @@
-import { LLM } from '@util/types'
+import { LLM, ModelProvider } from '@util/types'
 
 const MISTRAL_PLATFORM_LINK = 'https://docs.mistral.ai/'
 
@@ -8,7 +8,7 @@ const MISTRAL_PLATFORM_LINK = 'https://docs.mistral.ai/'
 const MISTRAL_7B: LLM = {
   modelId: 'mistral-tiny',
   modelName: 'Mistral Tiny',
-  provider: 'mistral',
+  provider: ModelProvider.Mistral,
   platformLink: MISTRAL_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -21,7 +21,7 @@ const MISTRAL_7B: LLM = {
 const MIXTRAL: LLM = {
   modelId: 'mistral-small',
   modelName: 'Mistral Small',
-  provider: 'mistral',
+  provider: ModelProvider.Mistral,
   platformLink: MISTRAL_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -34,7 +34,7 @@ const MIXTRAL: LLM = {
 const MISTRAL_MEDIUM: LLM = {
   modelId: 'mistral-medium',
   modelName: 'Mistral Medium',
-  provider: 'mistral',
+  provider: ModelProvider.Mistral,
   platformLink: MISTRAL_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -47,7 +47,7 @@ const MISTRAL_MEDIUM: LLM = {
 const MISTRAL_LARGE: LLM = {
   modelId: 'mistral-large-2402',
   modelName: 'Mistral Large',
-  provider: 'mistral',
+  provider: ModelProvider.Mistral,
   platformLink: MISTRAL_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,

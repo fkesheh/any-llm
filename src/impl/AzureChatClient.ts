@@ -10,6 +10,7 @@ import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 import { ChatClientBase } from '../ChatClientBase'
 import { OpenAIChatClient } from './OpenAIChatClient'
+import { Stream } from 'openai/streaming'
 
 export class AzureChatClient extends ChatClientBase {
   private azureOpenai: OpenAI | undefined
@@ -41,7 +42,7 @@ export class AzureChatClient extends ChatClientBase {
   async generateChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
-  ): Promise<any> {
+  ): Promise<Stream<OpenAI.Chat.Completions.ChatCompletionChunk>> {
     if (!this.azureOpenai) {
       throw new Error('Azure OpenAI client is not initialized')
     }
@@ -87,7 +88,7 @@ export class AzureChatClient extends ChatClientBase {
 
   async generateChatCompletionStream(
     chatSettings: LLMSettings,
-    messages: any[],
+    messages: ChatMessage[],
   ): Promise<StreamingTextResponse> {
     const response = await this.generateChatCompletion(chatSettings, messages)
     return new StreamingTextResponse(OpenAIStream(response))

@@ -1,9 +1,9 @@
 import { ApiError } from '@util/api-error'
 import {
+  ApiKeyValues,
   ChatMessage,
   LLMSettings,
   ModelProvider,
-  VALID_ENV_KEYS,
 } from '@util/types'
 import { StreamingTextResponse } from 'ai'
 import { ChatClientBase } from './ChatClientBase'
@@ -16,7 +16,6 @@ import { MistralChatClient } from './impl/MistralChatClient'
 import { OpenAIChatClient } from './impl/OpenAIChatClient'
 import { OpenRouterChatClient } from './impl/OpenRouterChatClient'
 import { PerplexityChatClient } from './impl/PerplexityChatClient'
-import { ApiKeyValues } from '@util/types'
 
 export class ChatClientProxy {
   private chatClient: ChatClientBase | undefined
@@ -74,8 +73,14 @@ export class ChatClientProxy {
         chatSettings,
         messages,
       )
-    } catch (error: any) {
-      return this.handleError(error)
+    } catch (error) {
+      if (error instanceof ApiError) {
+        return this.handleError(error)
+      } else {
+        return this.handleError(
+          new ApiError('An unexpected error occurred', 500),
+        )
+      }
     }
   }
 
@@ -108,18 +113,20 @@ export class ChatClientProxy {
         chatSettings: json.chatSettings,
         messages: json.messages,
       }
-    } catch (error: any) {
-      // Adjusted to acknowledge the potential for any type of error
-      // Handle JSON parsing errors or other errors
-      throw new Error(`Failed to parse request body: ${error.message}`)
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to parse request body: ${error.message}`)
+      } else {
+        throw new Error('Failed to parse request body due to an unknown error')
+      }
     }
   }
   private handleError(error: ApiError): Response {
-    if (this.chatClient) {
+    if (this.chatClient && 'handleError' in this.chatClient) {
       error = this.chatClient.handleError(error)
     }
 
-    let errorMessage = error.message || 'An unexpected error occurred'
+    const errorMessage = error.message || 'An unexpected error occurred'
     const errorCode = error.status || 500
 
     return new Response(JSON.stringify({ message: errorMessage }), {

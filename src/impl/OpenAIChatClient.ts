@@ -11,6 +11,7 @@ import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 import { ChatCompletionMessageParam } from 'openai/resources'
 import { ChatClientBase } from '../ChatClientBase'
+import { Stream } from 'openai/streaming'
 
 export class OpenAIChatClient extends ChatClientBase {
   private openai: OpenAI | undefined
@@ -47,7 +48,7 @@ export class OpenAIChatClient extends ChatClientBase {
   async generateChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
-  ): Promise<any> {
+  ): Promise<Stream<OpenAI.Chat.Completions.ChatCompletionChunk>> {
     if (!this.openai) {
       throw new Error('OpenAI client is not initialized')
     }

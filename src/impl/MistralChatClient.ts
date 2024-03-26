@@ -10,6 +10,7 @@ import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 import { ChatClientBase } from '../ChatClientBase'
 import { OpenAIChatClient } from './OpenAIChatClient'
+import { Stream } from 'openai/streaming'
 
 export class MistralChatClient extends ChatClientBase {
   private mistral: OpenAI | undefined
@@ -28,7 +29,7 @@ export class MistralChatClient extends ChatClientBase {
   async generateChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
-  ): Promise<any> {
+  ): Promise<Stream<OpenAI.Chat.Completions.ChatCompletionChunk>> {
     if (!this.mistral) {
       throw new Error('Mistral client is not initialized')
     }

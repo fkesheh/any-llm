@@ -13,6 +13,7 @@ import { AnthropicStream, StreamingTextResponse } from 'ai'
 
 import { MessageParam } from '@anthropic-ai/sdk/resources'
 import { ChatClientBase } from '../ChatClientBase'
+import { Stream } from '@anthropic-ai/sdk/streaming'
 
 const fallBackSystemMessage = 'You are a helpful assistant'
 
@@ -39,7 +40,7 @@ export class AnthropicChatClient extends ChatClientBase {
   async generateChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
-  ): Promise<any> {
+  ): Promise<Stream<Anthropic.Messages.MessageStreamEvent>> {
     if (!this.anthropic) {
       throw new Error('Anthropic client is not initialized')
     }
@@ -49,7 +50,7 @@ export class AnthropicChatClient extends ChatClientBase {
       systemMessage = firstMessage?.content ?? fallBackSystemMessage
     }
 
-    let formattedMessages = messages.map(this.messageConversion)
+    const formattedMessages = messages.map(this.messageConversion)
 
     return this.anthropic.messages.create({
       model: chatSettings.model.modelId,

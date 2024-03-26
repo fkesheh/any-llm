@@ -1,4 +1,4 @@
-import { LLM } from '@util/types'
+import { LLM, ModelProvider } from '@util/types'
 
 const COHERE_PLATFORM_LINK = 'https://docs.cohere.com/'
 
@@ -6,7 +6,7 @@ const COHERE_PLATFORM_LINK = 'https://docs.cohere.com/'
 const COMMAND_LIGHT: LLM = {
   modelId: 'command-light',
   modelName: 'Command Light',
-  provider: 'cohere',
+  provider: ModelProvider.Cohere,
   platformLink: COHERE_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -18,7 +18,7 @@ const COMMAND_LIGHT: LLM = {
 const COMMAND_LIGHT_NIGHTLY: LLM = {
   modelId: 'command-light-nightly',
   modelName: 'Command Light Nightly',
-  provider: 'cohere',
+  provider: ModelProvider.Cohere,
   platformLink: COHERE_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -30,7 +30,7 @@ const COMMAND_LIGHT_NIGHTLY: LLM = {
 const COMMAND: LLM = {
   modelId: 'command',
   modelName: 'Command',
-  provider: 'cohere',
+  provider: ModelProvider.Cohere,
   platformLink: COHERE_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -42,7 +42,7 @@ const COMMAND: LLM = {
 const COMMAND_NIGHTLY: LLM = {
   modelId: 'command-nightly',
   modelName: 'Command Nightly',
-  provider: 'cohere',
+  provider: ModelProvider.Cohere,
   platformLink: COHERE_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,
@@ -54,7 +54,7 @@ const COMMAND_NIGHTLY: LLM = {
 const COMMAND_R: LLM = {
   modelId: 'command-r',
   modelName: 'Command-R',
-  provider: 'cohere',
+  provider: ModelProvider.Cohere,
   platformLink: COHERE_PLATFORM_LINK,
   imageInput: false,
   minTemperature: 0.0,

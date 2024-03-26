@@ -10,6 +10,7 @@ import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 import { ChatClientBase } from '../ChatClientBase'
 import { OpenAIChatClient } from './OpenAIChatClient'
+import { Stream } from 'openai/streaming'
 
 export class GroqChatClient extends ChatClientBase {
   private groq: OpenAI | undefined
@@ -25,7 +26,7 @@ export class GroqChatClient extends ChatClientBase {
   async generateChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
-  ): Promise<any> {
+  ): Promise<Stream<OpenAI.Chat.Completions.ChatCompletionChunk>> {
     if (!this.groq) {
       throw new Error('Groq client is not initialized')
     }
@@ -41,7 +42,7 @@ export class GroqChatClient extends ChatClientBase {
 
   async generateChatCompletionStream(
     chatSettings: LLMSettings,
-    messages: any[],
+    messages: ChatMessage[],
   ): Promise<StreamingTextResponse> {
     const response = await this.generateChatCompletion(chatSettings, messages)
     return new StreamingTextResponse(OpenAIStream(response))

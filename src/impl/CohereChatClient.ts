@@ -12,6 +12,19 @@ import { CohereStream, StreamingTextResponse } from 'ai'
 import { Cohere, CohereClient } from 'cohere-ai'
 import { ChatMessageRole } from 'cohere-ai/api'
 import { ChatClientBase } from '../ChatClientBase'
+import { Stream } from 'cohere-ai/core'
+
+// Temporary fix for the missing StreamChunk type
+interface StreamChunk {
+  text?: string
+  eventType:
+    | 'stream-start'
+    | 'search-queries-generation'
+    | 'search-results'
+    | 'text-generation'
+    | 'citation-generation'
+    | 'stream-end'
+}
 
 export class CohereChatClient extends ChatClientBase {
   private cohere: CohereClient | undefined
@@ -50,7 +63,7 @@ export class CohereChatClient extends ChatClientBase {
   async generateChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
-  ): Promise<any> {
+  ): Promise<Stream<Cohere.StreamedChatResponse>> {
     if (!this.cohere) {
       throw new Error('Cohere client is not initialized')
     }
@@ -73,10 +86,12 @@ export class CohereChatClient extends ChatClientBase {
 
   async generateChatCompletionStream(
     chatSettings: LLMSettings,
-    messages: any[],
+    messages: ChatMessage[],
   ): Promise<StreamingTextResponse> {
     const response = await this.generateChatCompletion(chatSettings, messages)
-    return new StreamingTextResponse(CohereStream(response))
+    return new StreamingTextResponse(
+      CohereStream(response as AsyncIterable<StreamChunk>),
+    )
   }
 
   handleError(error: ApiError): ApiError {
