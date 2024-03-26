@@ -15,7 +15,6 @@ Here's a quick overview of how to interact with different LLM providers through 
 1. **Add the any-llm to your project**
 To add the AnyLLM package to your project, you can use either npm or yarn. Run one of the following commands in your terminal:
 
-    Using npm:
     ```bash
     npm i any-llm
     yarn add any-llm
