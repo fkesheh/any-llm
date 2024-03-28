@@ -16,5 +16,6 @@ export {
   SystemChatMessage,
   AssistantChatMessage,
   LLM,
+  LLMID,
   VALID_ENV_KEYS,
 } from '@util/types'

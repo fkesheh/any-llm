@@ -24,30 +24,10 @@ describe('ChatClientProxy', () => {
     .forEach((provider) => {
       describe(`${provider} provider`, () => {
         beforeEach(() => {
-          chatClientProxy = new ChatClientProxy(provider)
-        })
-
-        it('should initialize the chat client based on the provider', async () => {
-          await expect(
-            chatClientProxy.initialize(mockApiKeyValues),
-          ).resolves.not.toThrow()
-        })
-
-        it('should throw an error if chat client is not initialized for createChatCompletion', async () => {
-          await expect(
-            chatClientProxy.createChatCompletion(
-              {
-                model: LLM_LIST_MAP[provider][0],
-                temperature: 0.5,
-                maxTokens: 100,
-              },
-              mockMessages,
-            ),
-          ).rejects.toThrow('Chat client not initialized')
-        })
+          chatClientProxy = new ChatClientProxy(provider, mockApiKeyValues)
+        })     
 
         it('should return a StreamingTextResponse when chat client is initialized for createChatCompletion', async () => {
-          await chatClientProxy.initialize(mockApiKeyValues)
           await expect(
             chatClientProxy.createChatCompletion(
               {
@@ -60,21 +40,7 @@ describe('ChatClientProxy', () => {
           ).resolves.toBeDefined()
         })
 
-        it('should throw an error if chat client is not initialized for createChatCompletionNonStreaming', async () => {
-          await expect(
-            chatClientProxy.createChatCompletionNonStreaming(
-              {
-                model: LLM_LIST_MAP[provider][0],
-                temperature: 0.5,
-                maxTokens: 100,
-              },
-              mockMessages,
-            ),
-          ).rejects.toThrow('Chat client not initialized')
-        })
-
         it('should return a string and console log the result when chat client is initialized for createChatCompletionNonStreaming', async () => {
-          await chatClientProxy.initialize(mockApiKeyValues)
           const result = await chatClientProxy.createChatCompletionNonStreaming(
             {
               model: LLM_LIST_MAP[provider][0],

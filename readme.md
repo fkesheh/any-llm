@@ -31,11 +31,9 @@ import {
   loadApiKeyValuesFromEnvironment,
 } from 'any-llm'
 
-const chatClient = new ChatClientProxy(ModelProvider.Google)
-
-await chatClient.initialize(loadApiKeyValuesFromEnvironment())
+const chatClient = new ChatClientProxy(ModelProvider.Google, loadApiKeyValuesFromEnvironment())
 // or give the value of the key (check .env.sample for the valid environment keys)
-await chatClient.initialize({ GOOGLE_GEMINI_API_KEY: 'your-key' })
+const chatClient = new ChatClientProxy(ModelProvider.Google, { GOOGLE_GEMINI_API_KEY: 'your-key' })
 ```
 
 3. **Create a Chat Completion**:
@@ -84,8 +82,10 @@ The following models and providers are currently supported:
   - `gpt-3.5-turbo`: Updated GPT-3.5 Turbo
 
 - **Google Models:**
-
-  - `gemini-pro`: Gemini Pro
+  - `gemini-1.0-pro`: Gemini 1.0 Pro
+  - `gemini-1.0-pro-vision`: Gemini 1.0 Pro Vision
+  - `gemini-1.5-pro-latest`: Gemini 1.5 Pro
+  - `gemini-ultra`: Gemini 1.0 Ultra
 
 - **Anthropic Models:**
 

@@ -20,12 +20,14 @@ import { PerplexityChatClient } from './impl/PerplexityChatClient'
 export class ChatClientProxy {
   private chatClient: ChatClientBase | undefined
   private provider: ModelProvider
+  private apiKeyValues: ApiKeyValues
 
-  constructor(provider: ModelProvider) {
+  constructor(provider: ModelProvider, apiKeyValues: ApiKeyValues) {
     this.provider = provider
+    this.apiKeyValues = apiKeyValues
   }
 
-  initialize(apiKeyValues: ApiKeyValues) {
+  private initialize() {
     switch (this.provider) {
       case 'openai':
         this.chatClient = new OpenAIChatClient()
@@ -57,13 +59,16 @@ export class ChatClientProxy {
       default:
         throw new Error('Provider not found')
     }
-    return this.chatClient?.initialize(apiKeyValues)
+    return this.chatClient?.initialize(this.apiKeyValues)
   }
 
   async createChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
   ): Promise<StreamingTextResponse> {
+    if (!this.chatClient) {
+      await this.initialize()
+    }
     if (!this.chatClient) {
       throw new Error('Chat client not initialized')
     }
@@ -88,6 +93,9 @@ export class ChatClientProxy {
     chatSettings: LLMSettings,
     messages: ChatMessage[],
   ): Promise<string> {
+    if (!this.chatClient) {
+      await this.initialize()
+    }
     if (!this.chatClient) {
       throw new Error('Chat client not initialized')
     }
