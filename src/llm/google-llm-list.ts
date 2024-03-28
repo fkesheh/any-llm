@@ -4,30 +4,59 @@ const GOOGLE_PLATFORM_LINK = 'https://ai.google.dev/'
 
 // Google Models (UPDATED 12/22/23) -----------------------------
 
-// Gemini Pro (UPDATED 12/22/23)
-const GEMINI_PRO: LLM = {
-  modelId: 'gemini-pro',
-  modelName: 'Gemini Pro',
+// Gemini 1.0 Pro (UPDATED 12/22/23)
+const GEMINI_1_0_PRO: LLM = {
+  modelId: 'gemini-1.0-pro',
+  modelName: 'Gemini 1.0 Pro',
   provider: ModelProvider.Google,
   platformLink: GOOGLE_PLATFORM_LINK,
   imageInput: false,
-  minTemperature: 0.0,
-  maxTemperature: 1.0,
+  minTemperature: 0.9,
+  maxTemperature: 0.9,
   maxTokenOutputLength: 2048,
   maxContextLength: 30720,
 }
 
-// Gemini Pro Vision (UPDATED 12/22/23)
-const GEMINI_PRO_VISION: LLM = {
-  modelId: 'gemini-pro-vision',
-  modelName: 'Gemini Pro Vision',
+// Gemini 1.0 Pro Vision (UPDATED 12/22/23)
+const GEMINI_1_0_PRO_VISION: LLM = {
+  modelId: 'gemini-1.0-pro-vision',
+  modelName: 'Gemini 1.0 Pro Vision',
   provider: ModelProvider.Google,
   platformLink: GOOGLE_PLATFORM_LINK,
   imageInput: true,
-  minTemperature: 0.0,
-  maxTemperature: 1.0,
+  minTemperature: 0.4,
+  maxTemperature: 0.4,
   maxTokenOutputLength: 4096,
   maxContextLength: 12288,
 }
 
-export const GOOGLE_LLM_LIST: LLM[] = [GEMINI_PRO, GEMINI_PRO_VISION]
+// Gemini 1.5 Pro (UPDATED 12/22/23)
+const GEMINI_1_5_PRO: LLM = {
+  modelId: 'gemini-1.5-pro-latest',
+  modelName: 'Gemini 1.5 Pro',
+  provider: ModelProvider.Google,
+  platformLink: GOOGLE_PLATFORM_LINK,
+  imageInput: false,
+  minTemperature: 2.0,
+  maxTemperature: 2.0,
+  maxTokenOutputLength: 8192,
+  maxContextLength: 1048576,
+}
+
+const GEMINI_ULTRA: LLM = {
+  modelId: 'gemini-ultra',
+  modelName: 'Gemini 1.0 Ultra',
+  provider: ModelProvider.Google,
+  platformLink: GOOGLE_PLATFORM_LINK,
+  imageInput: false,
+  minTemperature: 0.9,
+  maxTemperature: 0.9,
+  maxTokenOutputLength: 2048,
+  maxContextLength: 30720,
+}
+export const GOOGLE_LLM_LIST: LLM[] = [
+  GEMINI_1_0_PRO,
+  GEMINI_1_0_PRO_VISION,
+  GEMINI_ULTRA,
+  GEMINI_1_5_PRO,
+]

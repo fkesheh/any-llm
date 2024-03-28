@@ -58,34 +58,34 @@ export class GoogleChatClient extends ChatClientBase {
       throw new Error('Google AI client is not initialized')
     }
 
-    const googleModel = this.googleAI.getGenerativeModel({
-      model: chatSettings.model.modelId,
-    })
+    const googleModel = this.googleAI.getGenerativeModel(
+      {
+        model: chatSettings.model.modelId,
+      },
+      {
+        apiVersion: 'v1beta',
+      },
+    )
 
     const googleMessages = messages.map(GoogleChatClient.convertMessages)
 
     if (googleMessages[messages.length - 1].role === 'model') messages.pop()
 
-    if (chatSettings.model.modelId === 'gemini-pro') {
-      const lastMessage = googleMessages.pop()
-      if (!lastMessage) {
-        throw new Error('No messages found')
-      }
-
-      const result = await googleModel
-        .startChat({
-          history: googleMessages,
-          generationConfig: {
-            temperature: chatSettings.temperature,
-          },
-        })
-        .sendMessageStream(lastMessage.parts)
-
-      return GoogleGenerativeAIStream(result)
+    const lastMessage = googleMessages.pop()
+    if (!lastMessage) {
+      throw new Error('No messages found')
     }
-    // Todo add support for vision models
 
-    throw new Error('Unsupported model type for Google AI')
+    const result = await googleModel
+      .startChat({
+        history: googleMessages,
+        generationConfig: {
+          temperature: chatSettings.temperature,
+        },
+      })
+      .sendMessageStream(lastMessage.parts)
+
+    return GoogleGenerativeAIStream(result)
   }
 
   async generateChatCompletionStream(

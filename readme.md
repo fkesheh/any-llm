@@ -12,17 +12,17 @@ Welcome to the AnyLLM project! This project aims to create a seamless abstractio
 
 Here's a quick overview of how to interact with different LLM providers through the AnyLLM abstraction layer:
 
-1. **Add the any-llm to your project**
-To add the AnyLLM package to your project, you can use either npm or yarn. Run one of the following commands in your terminal:
+1.  **Add the any-llm to your project**
+    To add the AnyLLM package to your project, you can use either npm or yarn. Run one of the following commands in your terminal:
 
-    Using npm:
-    ```bash
-    npm i any-llm
-    yarn add any-llm
-    ```
+        Using npm:
+        ```bash
+        npm i any-llm
+        yarn add any-llm
+        ```
 
-2. **Initialize the Chat Client Proxy**:
-   First, create an instance of `ChatClientProxy` by specifying the provider you wish to use. This is done by passing the provider's name to the `ChatClientProxy` constructor.
+2.  **Initialize the Chat Client Proxy**:
+    First, create an instance of `ChatClientProxy` by specifying the provider you wish to use. This is done by passing the provider's name to the `ChatClientProxy` constructor.
 
 ```typescript
 import {
@@ -79,14 +79,17 @@ await chatClient.initialize({ GOOGLE_GEMINI_API_KEY: 'your-key' })
 The following models and providers are currently supported:
 
 - **OpenAI Models:**
+
   - `gpt-4-turbo-preview`: GPT-4 Turbo
   - `gpt-4`: GPT-4
   - `gpt-3.5-turbo`: Updated GPT-3.5 Turbo
 
 - **Google Models:**
+
   - `gemini-pro`: Gemini Pro
 
 - **Anthropic Models:**
+
   - `claude-2.1`: Claude 2
   - `claude-instant-1.2`: Claude Instant
   - `claude-3-haiku-20240307`: Claude 3 Haiku
@@ -94,12 +97,14 @@ The following models and providers are currently supported:
   - `claude-3-opus-20240229`: Claude 3 Opus
 
 - **Mistral Models:**
+
   - `mistral-tiny`: Mistral Tiny
   - `mistral-small`: Mistral Small
   - `mistral-medium`: Mistral Medium
   - `mistral-large-2402`: Mistral Large
 
 - **Groq Models:**
+
   - `llama2-70b-4096`: LLaMA2-70b
   - `mixtral-8x7b-32768`: Mixtral-8x7b
 
