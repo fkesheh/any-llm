@@ -1,14 +1,14 @@
-import { ApiError } from '@util/api-error'
-import { checkAndGetEnv } from '@util/server-chat-helpers'
+import { ApiError } from '@models/ApiError'
+import { checkAndGetEnv } from '@util/ServerChatHelpers'
 import {
   ApiKeyValues,
   ChatMessage,
   LLMSettings,
-  VALID_ENV_KEYS,
-} from '@util/types'
+  validEnviromentKeys,
+} from '@models/types'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
-import { ChatClientBase } from '../ChatClientBase'
+import { ChatClientBase } from '@models/ChatClientBase'
 import { OpenAIChatClient } from './OpenAIChatClient'
 import { Stream } from 'openai/streaming'
 
@@ -18,7 +18,7 @@ export class OpenRouterChatClient extends ChatClientBase {
   async initialize(apiKeyValues: ApiKeyValues) {
     const openRouterApiKey = checkAndGetEnv(
       apiKeyValues,
-      VALID_ENV_KEYS.OPENROUTER_API_KEY,
+      validEnviromentKeys.OPENROUTER_API_KEY,
     )
     this.openRouter = new OpenAI({
       apiKey: openRouterApiKey,

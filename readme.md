@@ -25,15 +25,20 @@ Here's a quick overview of how to interact with different LLM providers through 
 
 ```typescript
 import {
-  ChatClientProxy,
+  ChatClient,
   ModelProvider,
-  getModel,
+  ChatModels,
   loadApiKeyValuesFromEnvironment,
 } from 'any-llm'
 
-const chatClient = new ChatClientProxy(ModelProvider.Google, loadApiKeyValuesFromEnvironment())
+const chatClient = new ChatClient(
+  ModelProvider.Google,
+  loadApiKeyValuesFromEnvironment(),
+)
 // or give the value of the key (check .env.sample for the valid environment keys)
-const chatClient = new ChatClientProxy(ModelProvider.Google, { GOOGLE_GEMINI_API_KEY: 'your-key' })
+const chatClient = new ChatClient(ModelProvider.Google, {
+  GOOGLE_GEMINI_API_KEY: 'your-key',
+})
 ```
 
 3. **Create a Chat Completion**:
@@ -43,7 +48,7 @@ const chatClient = new ChatClientProxy(ModelProvider.Google, { GOOGLE_GEMINI_API
    // NonStreaming Mode - String
    const msg = await chatClient.createChatCompletionNonStreaming(
      {
-       model: getModel(ModelProvider.Google, 'gemini-pro'),
+       model: ChatModels.Google.GEMINI_1_0_PRO,
        max_tokens: 4096,
        temperature: 0.3,
      },
@@ -58,7 +63,7 @@ const chatClient = new ChatClientProxy(ModelProvider.Google, { GOOGLE_GEMINI_API
    // Streaming Mode - StreamingTextResponse
    const msg = await chatClient.createChatCompletion(
      {
-       model: getModel(ModelProvider.Google, 'gemini-pro'),
+       model: ChatModels.Google.GEMINI_1_0_PRO,
        max_tokens: 4096,
        temperature: 0.3,
      },
@@ -82,6 +87,7 @@ The following models and providers are currently supported:
   - `gpt-3.5-turbo`: Updated GPT-3.5 Turbo
 
 - **Google Models:**
+
   - `gemini-1.0-pro`: Gemini 1.0 Pro
   - `gemini-1.0-pro-vision`: Gemini 1.0 Pro Vision
   - `gemini-1.5-pro-latest`: Gemini 1.5 Pro
@@ -126,6 +132,26 @@ Please refer to the respective documentation for more details on each model and 
 
 ## Project Status
 
-- [x] Support for Text
-- [ ] Support for Images
-- [ ] Support for Tools
+- [x] Chat
+  - [x] Text generation
+  - [ ] Docs (in context learning)
+  - [ ] Images
+- [ ] Embeddings
+  - [ ] For text (general, query, retrieval)
+  - [ ] For images
+- [ ] Images
+  - [ ] Image description
+  - [ ] Images generation
+- [ ] Chunking
+  - [ ] Text chunking
+- - [ ] Images reshape and chunk
+- [ ] Video
+  - [ ] Transcription
+  - [ ] Images extraction
+  - [ ] Image Similarity
+- [ ] Functions
+  - [ ] Function Description
+  - [ ] Function Calling
+- [ ] Agents
+  - [ ] Chained prompts
+  - [ ] Auto flows

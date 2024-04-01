@@ -10,7 +10,11 @@ module.exports = {
       {
         alias: {
           '@util': './src/util',
-          '@llm': './src/llm',
+          '@chatModels': './src/chatModels',
+          '@models': './src/models',
+          '@types': './src/types',
+          '@implementations': './src/impl',
+          '@embeddings': './src/embeddings',
         },
       },
     ],

@@ -1,15 +1,15 @@
 import { Content, GoogleGenerativeAI, Part, Role } from '@google/generative-ai'
-import { ApiError } from '@util/api-error'
-import { checkAndGetEnv } from '@util/server-chat-helpers'
+import { ApiError } from '@models/ApiError'
+import { checkAndGetEnv } from '@util/ServerChatHelpers'
 import {
   ApiKeyValues,
   ChatMessage,
   ChatRoles,
   LLMSettings,
-  VALID_ENV_KEYS,
-} from '@util/types'
+  validEnviromentKeys,
+} from '@models/types'
 import { GoogleGenerativeAIStream, StreamingTextResponse } from 'ai'
-import { ChatClientBase } from '../ChatClientBase'
+import { ChatClientBase } from '@models/ChatClientBase'
 
 export class GoogleChatClient extends ChatClientBase {
   private googleAI: GoogleGenerativeAI | undefined
@@ -17,7 +17,7 @@ export class GoogleChatClient extends ChatClientBase {
   async initialize(apiKeyValues: ApiKeyValues) {
     const googleGeminiApiKey = checkAndGetEnv(
       apiKeyValues,
-      VALID_ENV_KEYS.GOOGLE_GEMINI_API_KEY,
+      validEnviromentKeys.GOOGLE_GEMINI_API_KEY,
     )
     this.googleAI = new GoogleGenerativeAI(googleGeminiApiKey)
   }

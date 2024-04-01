@@ -1,16 +1,16 @@
-import { ApiError } from '@util/api-error'
-import { checkAndGetEnv, getEnv } from '@util/server-chat-helpers'
+import { ApiError } from '@models/ApiError'
+import { checkAndGetEnv, getEnv } from '@util/ServerChatHelpers'
 import {
   ApiKeyValues,
   ChatMessage,
   LLMSettings,
   TextPart,
-  VALID_ENV_KEYS,
-} from '@util/types'
+  validEnviromentKeys,
+} from '@models/types'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 import { ChatCompletionMessageParam } from 'openai/resources'
-import { ChatClientBase } from '../ChatClientBase'
+import { ChatClientBase } from '@models/ChatClientBase'
 import { Stream } from 'openai/streaming'
 
 export class OpenAIChatClient extends ChatClientBase {
@@ -19,11 +19,11 @@ export class OpenAIChatClient extends ChatClientBase {
   async initialize(apiKeyValues: ApiKeyValues) {
     const openAiApiKey = checkAndGetEnv(
       apiKeyValues,
-      VALID_ENV_KEYS.OPENAI_API_KEY,
+      validEnviromentKeys.OPENAI_API_KEY,
     )
     const openAiOrganizationId = getEnv(
       apiKeyValues,
-      VALID_ENV_KEYS.OPENAI_ORGANIZATION_ID,
+      validEnviromentKeys.OPENAI_ORGANIZATION_ID,
     )
     this.openai = new OpenAI({
       apiKey: openAiApiKey,

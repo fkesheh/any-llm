@@ -1,18 +1,18 @@
 import Anthropic from '@anthropic-ai/sdk'
-import { ApiError } from '@util/api-error'
-import { checkAndGetEnv } from '@util/server-chat-helpers'
+import { ApiError } from '@models/ApiError'
+import { checkAndGetEnv } from '@util/ServerChatHelpers'
 import {
   ApiKeyValues,
   ChatMessage,
   ChatRoles,
   LLMSettings,
   SystemChatMessage,
-  VALID_ENV_KEYS,
-} from '@util/types'
+  validEnviromentKeys,
+} from '@models/types'
 import { AnthropicStream, StreamingTextResponse } from 'ai'
 
 import { MessageParam } from '@anthropic-ai/sdk/resources'
-import { ChatClientBase } from '../ChatClientBase'
+import { ChatClientBase } from '@models/ChatClientBase'
 import { Stream } from '@anthropic-ai/sdk/streaming'
 
 const fallBackSystemMessage = 'You are a helpful assistant'
@@ -23,7 +23,7 @@ export class AnthropicChatClient extends ChatClientBase {
   async initialize(apiKeyValues: ApiKeyValues) {
     const anthropic_api_key = checkAndGetEnv(
       apiKeyValues,
-      VALID_ENV_KEYS.ANTHROPIC_API_KEY,
+      validEnviromentKeys.ANTHROPIC_API_KEY,
     )
     this.anthropic = new Anthropic({
       apiKey: anthropic_api_key,

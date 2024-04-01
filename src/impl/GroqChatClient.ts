@@ -1,14 +1,14 @@
-import { ApiError } from '@util/api-error'
-import { checkAndGetEnv } from '@util/server-chat-helpers'
+import { ApiError } from '@models/ApiError'
+import { checkAndGetEnv } from '@util/ServerChatHelpers'
 import {
   ApiKeyValues,
   ChatMessage,
   LLMSettings,
-  VALID_ENV_KEYS,
-} from '@util/types'
+  validEnviromentKeys,
+} from '@models/types'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
-import { ChatClientBase } from '../ChatClientBase'
+import { ChatClientBase } from '@models/ChatClientBase'
 import { OpenAIChatClient } from './OpenAIChatClient'
 import { Stream } from 'openai/streaming'
 
@@ -16,7 +16,10 @@ export class GroqChatClient extends ChatClientBase {
   private groq: OpenAI | undefined
 
   async initialize(apiKeyValues: ApiKeyValues) {
-    const grogApiKey = checkAndGetEnv(apiKeyValues, VALID_ENV_KEYS.GROQ_API_KEY)
+    const grogApiKey = checkAndGetEnv(
+      apiKeyValues,
+      validEnviromentKeys.GROQ_API_KEY,
+    )
     this.groq = new OpenAI({
       apiKey: grogApiKey,
       baseURL: 'https://api.groq.com/openai/v1',

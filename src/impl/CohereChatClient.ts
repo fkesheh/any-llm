@@ -1,17 +1,17 @@
-import { ApiError } from '@util/api-error'
-import { checkAndGetEnv } from '@util/server-chat-helpers'
+import { ApiError } from '@models/ApiError'
+import { checkAndGetEnv } from '@util/ServerChatHelpers'
 import {
   ApiKeyValues,
   ChatMessage,
   ChatRoles,
   LLMSettings,
   TextPart,
-  VALID_ENV_KEYS,
-} from '@util/types'
+  validEnviromentKeys,
+} from '@models/types'
 import { CohereStream, StreamingTextResponse } from 'ai'
 import { Cohere, CohereClient } from 'cohere-ai'
 import { ChatMessageRole } from 'cohere-ai/api'
-import { ChatClientBase } from '../ChatClientBase'
+import { ChatClientBase } from '@models/ChatClientBase'
 import { Stream } from 'cohere-ai/core'
 
 // Temporary fix for the missing StreamChunk type
@@ -32,7 +32,7 @@ export class CohereChatClient extends ChatClientBase {
   async initialize(apiKeyValues: ApiKeyValues) {
     const cohere_api_key = checkAndGetEnv(
       apiKeyValues,
-      VALID_ENV_KEYS.COHERE_API_KEY,
+      validEnviromentKeys.COHERE_API_KEY,
     )
     this.cohere = new CohereClient({
       token: cohere_api_key,

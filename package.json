@@ -1,6 +1,6 @@
 {
   "name": "any-llm",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "A seamless typescript abstraction layer between your application and various Language Learning Model (LLM) providers.",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "prettier": "prettier --write .",
     "lint": "eslint . --ext .ts",
     "prePublish": "npm run build && npm run lint && npm run prettier",
-    "publish": "npm run prePublish && npm publish --access=public"
+    "npmPublish": "npm run prePublish && npm publish --access=public"
   },
   "keywords": [
     "abstraction-layer",

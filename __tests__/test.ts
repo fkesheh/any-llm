@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it } from '@jest/globals' // Basic Jest testing functions
-import { ChatClientProxy } from '../src/ChatClientProxy'
-import { LLM_LIST_MAP } from '../src/llm/llm-list'
-import { loadApiKeyValuesFromEnvironment } from '../src/util/load-api-keys'
-import { ApiKeyValues, ChatMessage, ChatRoles } from '../src/util/types'
+import { ChatClient } from '../src/ChatClient'
+import { ChatModels } from '../src/chatModels/ChatModels'
+import { loadApiKeyValuesFromEnvironment } from '../src/util/LoadApiKeys'
+import { ApiKeyValues, ChatMessage, ChatRoles } from '../src/models/types'
 
 describe('ChatClientProxy', () => {
-  let chatClientProxy: ChatClientProxy
+  let chatClientProxy: ChatClient
   let mockApiKeyValues: ApiKeyValues
-  const providers = Object.keys(LLM_LIST_MAP)
+  const providers = Object.keys(ChatModels)
   const mockMessages: ChatMessage[] = [
     {
       role: ChatRoles.User,
@@ -24,35 +24,38 @@ describe('ChatClientProxy', () => {
     .forEach((provider) => {
       describe(`${provider} provider`, () => {
         beforeEach(() => {
-          chatClientProxy = new ChatClientProxy(provider, mockApiKeyValues)
-        })     
-
-        it('should return a StreamingTextResponse when chat client is initialized for createChatCompletion', async () => {
-          await expect(
-            chatClientProxy.createChatCompletion(
-              {
-                model: LLM_LIST_MAP[provider][0],
-                temperature: 0.5,
-                maxTokens: 100,
-              },
-              mockMessages,
-            ),
-          ).resolves.toBeDefined()
+          chatClientProxy = new ChatClient(provider, mockApiKeyValues)
         })
 
-        it('should return a string and console log the result when chat client is initialized for createChatCompletionNonStreaming', async () => {
-          const result = await chatClientProxy.createChatCompletionNonStreaming(
-            {
-              model: LLM_LIST_MAP[provider][0],
-              temperature: 0.5,
-              maxTokens: 100,
-            },
-            mockMessages,
-          )
-          console.log(
-            `Generated result for ${provider}/${LLM_LIST_MAP[provider][0].modelId}: ${result}`,
-          )
-          expect(result).toBeDefined()
+        const models = Object.keys(ChatModels[provider])
+
+        models.forEach((model) => {
+          it(`should return a StreamingTextResponse when chat client is initialized for createChatCompletion (${provider}/${model})`, async () => {
+            await expect(
+              chatClientProxy.createChatCompletion(
+                {
+                  model: ChatModels[provider][model],
+                  temperature: 0.5,
+                  maxTokens: 25,
+                },
+                mockMessages,
+              ),
+            ).resolves.toBeDefined()
+          })
+
+          it(`should return a string and console log the result when chat client is initialized for createChatCompletionNonStreaming (${provider}/${model})`, async () => {
+            const result =
+              await chatClientProxy.createChatCompletionNonStreaming(
+                {
+                  model: ChatModels[provider][model],
+                  temperature: 0.5,
+                  maxTokens: 25,
+                },
+                mockMessages,
+              )
+            console.log(`Generated result for ${provider}/${model}: ${result}`)
+            expect(result).toBeDefined()
+          })
         })
       })
     })
@@ -73,18 +76,18 @@ describe('ChatClientProxy', () => {
         method: 'POST',
         body: JSON.stringify({
           chatSettings: {
-            model: LLM_LIST_MAP['openai'][0],
+            model: ChatModels.OpenAI.GPT3_5Turbo,
             temperature: 0.5,
-            maxTokens: 100,
+            maxTokens: 25,
           },
           messages: mockMessages,
         }),
       })
       await expect(chatClientProxy.parseRequest(request)).resolves.toEqual({
         chatSettings: {
-          model: LLM_LIST_MAP['openai'][0],
+          model: ChatModels.Google.GEMINI_1_0_PRO,
           temperature: 0.5,
-          maxTokens: 100,
+          maxTokens: 25,
         },
         messages: mockMessages,
       })

@@ -1,14 +1,14 @@
-import { ApiError } from '@util/api-error'
-import { checkAndGetEnv } from '@util/server-chat-helpers'
+import { ApiError } from '@models/ApiError'
+import { checkAndGetEnv } from '@util/ServerChatHelpers'
 import {
   ApiKeyValues,
   ChatMessage,
   LLMSettings,
-  VALID_ENV_KEYS,
-} from '@util/types'
+  validEnviromentKeys,
+} from '@models/types'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
-import { ChatClientBase } from '../ChatClientBase'
+import { ChatClientBase } from '@models/ChatClientBase'
 import { OpenAIChatClient } from './OpenAIChatClient'
 import { Stream } from 'openai/streaming'
 
@@ -20,15 +20,15 @@ export class AzureChatClient extends ChatClientBase {
     this.apiKeyValues = apiKeyValues
     const azureOpenaiApiKey = checkAndGetEnv(
       apiKeyValues,
-      VALID_ENV_KEYS.AZURE_OPENAI_API_KEY,
+      validEnviromentKeys.AZURE_OPENAI_API_KEY,
     )
     const azureOpenaiEndpoint = checkAndGetEnv(
       apiKeyValues,
-      VALID_ENV_KEYS.AZURE_OPENAI_ENDPOINT,
+      validEnviromentKeys.AZURE_OPENAI_ENDPOINT,
     )
     const deploymentId = checkAndGetEnv(
       apiKeyValues,
-      VALID_ENV_KEYS.AZURE_OPENAI_DEPLOYMENT_ID,
+      validEnviromentKeys.AZURE_OPENAI_DEPLOYMENT_ID,
     )
 
     this.azureOpenai = new OpenAI({
@@ -52,25 +52,25 @@ export class AzureChatClient extends ChatClientBase {
       case 'gpt-3.5-turbo':
         deploymentId = checkAndGetEnv(
           this.apiKeyValues,
-          VALID_ENV_KEYS.AZURE_OPENAI_35_TURBO_ID,
+          validEnviromentKeys.AZURE_OPENAI_35_TURBO_ID,
         )
         break
       case 'gpt-4':
         deploymentId = checkAndGetEnv(
           this.apiKeyValues,
-          VALID_ENV_KEYS.AZURE_OPENAI_4_ID,
+          validEnviromentKeys.AZURE_OPENAI_4_ID,
         )
         break
       case 'gpt-4-turbo-preview':
         deploymentId = checkAndGetEnv(
           this.apiKeyValues,
-          VALID_ENV_KEYS.AZURE_OPENAI_4_TURBO_ID,
+          validEnviromentKeys.AZURE_OPENAI_4_TURBO_ID,
         )
         break
       case 'gpt-4-vision-preview':
         deploymentId = checkAndGetEnv(
           this.apiKeyValues,
-          VALID_ENV_KEYS.AZURE_OPENAI_4_TURBO_VISION_ID,
+          validEnviromentKeys.AZURE_OPENAI_4_TURBO_VISION_ID,
         )
         break
       default:

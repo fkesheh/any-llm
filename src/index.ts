@@ -1,9 +1,13 @@
-export { ChatClientProxy } from './ChatClientProxy'
-export { ChatClientBase } from './ChatClientBase'
-export { ApiError } from '@util/api-error'
-export { LLM_LIST, LLM_LIST_MAP } from '@llm/llm-list'
-export { loadApiKeyValuesFromEnvironment } from '@util/load-api-keys'
-export { getModel } from '@util/get-model'
+export { ChatClient } from './ChatClient'
+
+export { ChatClientBase } from '@models/ChatClientBase'
+
+export { ApiError } from '@models/ApiError'
+
+export { ChatModels } from '@chatModels/ChatModels'
+
+export { loadApiKeyValuesFromEnvironment } from '@util/LoadApiKeys'
+
 export {
   ModelProvider,
   ApiKeyValues,
@@ -15,7 +19,6 @@ export {
   UserChatMessage,
   SystemChatMessage,
   AssistantChatMessage,
-  LLM,
-  LLMID,
-  VALID_ENV_KEYS,
-} from '@util/types'
+  ChatModel,
+  validEnviromentKeys,
+} from '@models/types'

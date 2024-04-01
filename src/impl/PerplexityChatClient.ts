@@ -1,15 +1,15 @@
-import { ApiError } from '@util/api-error'
-import { checkAndGetEnv } from '@util/server-chat-helpers'
+import { ApiError } from '@models/ApiError'
+import { checkAndGetEnv } from '@util/ServerChatHelpers'
 import {
   ApiKeyValues,
   ChatMessage,
   LLMSettings,
-  VALID_ENV_KEYS,
-} from '@util/types'
+  validEnviromentKeys,
+} from '@models/types'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 import { Stream } from 'openai/streaming'
-import { ChatClientBase } from '../ChatClientBase'
+import { ChatClientBase } from '@models/ChatClientBase'
 import { OpenAIChatClient } from './OpenAIChatClient'
 
 export class PerplexityChatClient extends ChatClientBase {
@@ -18,7 +18,7 @@ export class PerplexityChatClient extends ChatClientBase {
   async initialize(apiKeyValues: ApiKeyValues) {
     const perplexityApiKey = checkAndGetEnv(
       apiKeyValues,
-      VALID_ENV_KEYS.PERPLEXITY_API_KEY,
+      validEnviromentKeys.PERPLEXITY_API_KEY,
     )
     this.perplexity = new OpenAI({
       apiKey: perplexityApiKey,
