@@ -26,4 +26,12 @@ const MIXTRAL_8X7B: ChatModel = {
   maxContextLength: 32768,
 }
 
-export const GroqChatModels = { MIXTRAL_8X7B, LLaMA2_70B }
+type GroqChatModelsType = {
+  MIXTRAL_8X7B: ChatModel
+  LLaMA2_70B: ChatModel
+}
+
+export const GroqChatModels: GroqChatModelsType = {
+  MIXTRAL_8X7B,
+  LLaMA2_70B,
+}

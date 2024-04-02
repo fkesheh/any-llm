@@ -63,7 +63,15 @@ const COMMAND_R: ChatModel = {
   maxContextLength: 128000,
 }
 
-export const CohereChatModels = {
+type CohereChatModelsType = {
+  COMMAND_LIGHT: ChatModel
+  COMMAND_LIGHT_NIGHTLY: ChatModel
+  COMMAND: ChatModel
+  COMMAND_NIGHTLY: ChatModel
+  COMMAND_R: ChatModel
+}
+
+export const CohereChatModels: CohereChatModelsType = {
   COMMAND_LIGHT,
   COMMAND_LIGHT_NIGHTLY,
   COMMAND,

@@ -69,8 +69,15 @@ const CLAUDE_3_OPUS: ChatModel = {
   maxTokenOutputLength: 4096,
   maxContextLength: 200000,
 }
+type AnthropicChatModelsType = {
+  CLAUDE_INSTANT: ChatModel
+  CLAUDE_2: ChatModel
+  CLAUDE_3_HAIKU: ChatModel
+  CLAUDE_3_SONNET: ChatModel
+  CLAUDE_3_OPUS: ChatModel
+}
 
-export const AnthropicChatModels = {
+export const AnthropicChatModels: AnthropicChatModelsType = {
   CLAUDE_INSTANT,
   CLAUDE_2,
   CLAUDE_3_HAIKU,

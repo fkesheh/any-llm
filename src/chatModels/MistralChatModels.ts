@@ -55,8 +55,14 @@ const MISTRAL_LARGE: ChatModel = {
   maxTokenOutputLength: 2000,
   maxContextLength: 32000,
 }
+type MistralChatModelsType = {
+  MISTRAL_7B: ChatModel
+  MIXTRAL: ChatModel
+  MISTRAL_MEDIUM: ChatModel
+  MISTRAL_LARGE: ChatModel
+}
 
-export const MistralChatModels = {
+export const MistralChatModels: MistralChatModelsType = {
   MISTRAL_7B,
   MIXTRAL,
   MISTRAL_MEDIUM,

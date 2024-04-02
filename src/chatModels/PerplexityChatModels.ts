@@ -93,8 +93,17 @@ const PERPLEXITY_SONAR_MEDIUM_ONLINE_8x7B: ChatModel = {
   maxTokenOutputLength: 12000,
   maxContextLength: 12000,
 }
+type PerplexityChatModelsType = {
+  PERPLEXITY_SONAR_SMALL_CHAT_7B: ChatModel
+  PERPLEXITY_SONAR_SMALL_ONLINE_7B: ChatModel
+  PERPLEXITY_SONAR_MEDIUM_CHAT_8x7B: ChatModel
+  PERPLEXITY_SONAR_MEDIUM_ONLINE_8x7B: ChatModel
+  MISTRAL_7B_INSTRUCT: ChatModel
+  MIXTRAL_8X7B_INSTRUCT: ChatModel
+  CODELLAMA_70B_INSTRUCT: ChatModel
+}
 
-export const PerplexityChatModels = {
+export const PerplexityChatModels: PerplexityChatModelsType = {
   PERPLEXITY_SONAR_SMALL_CHAT_7B,
   PERPLEXITY_SONAR_SMALL_ONLINE_7B,
   PERPLEXITY_SONAR_MEDIUM_CHAT_8x7B,

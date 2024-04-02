@@ -56,8 +56,14 @@ const GPT3_5Turbo: ChatModel = {
   maxContextLength: 4096,
   // MAX_CONTEXT_LENGTH: 16385 (TODO: Change this back to 16385 when OpenAI bumps the model)
 }
+type OpenAIChatModelsType = {
+  GPT3_5Turbo: ChatModel
+  GPT4: ChatModel
+  GPT4Turbo: ChatModel
+  GPT4Vision: ChatModel
+}
 
-export const OpenAiChatModels = {
+export const OpenAIChatModels: OpenAIChatModelsType = {
   GPT3_5Turbo,
   GPT4,
   GPT4Turbo,

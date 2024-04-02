@@ -54,7 +54,14 @@ const GEMINI_ULTRA: ChatModel = {
   maxTokenOutputLength: 2048,
   maxContextLength: 30720,
 }
-export const GoogleChatModels = {
+type GoogleChatModelsType = {
+  GEMINI_1_0_PRO: ChatModel
+  GEMINI_1_0_PRO_VISION: ChatModel
+  GEMINI_ULTRA: ChatModel
+  GEMINI_1_5_PRO: ChatModel
+}
+
+export const GoogleChatModels: GoogleChatModelsType = {
   GEMINI_1_0_PRO,
   GEMINI_1_0_PRO_VISION,
   GEMINI_ULTRA,

@@ -1,6 +1,6 @@
 {
   "name": "any-llm",
-  "version": "0.1.11",
+  "version": "0.1.20",
   "description": "A seamless typescript abstraction layer between your application and various Language Learning Model (LLM) providers.",
   "repository": {
     "type": "git",
@@ -10,12 +10,12 @@
     "url": "https://github.com/fkesheh/any-llm/issues"
   },
   "homepage": "https://github.com/fkesheh/any-llm#readme",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "tsc && babel src --out-dir lib --extensions \".ts,.tsx\"",
-    "prettier": "prettier --write .",
+    "build": "rm dist -rf && tsc && tsc-alias --dir src",
+    "prettier": "prettier --write src",
     "lint": "eslint . --ext .ts",
     "prePublish": "npm run build && npm run lint && npm run prettier",
     "npmPublish": "npm run prePublish && npm publish --access=public"
@@ -40,6 +40,7 @@
     "jest": "^29.7.0",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
+    "tsc-alias": "^1.8.8",
     "typescript": "^5.4.3"
   },
   "compilerOptions": {
@@ -48,8 +49,20 @@
       "@util/*": [
         "src/util/*"
       ],
-      "@llm/*": [
-        "src/llm/*"
+      "@chatModels/*": [
+        "src/chatModels/*"
+      ],
+      "@models/*": [
+        "src/models/*"
+      ],
+      "@types/*": [
+        "src/types/*"
+      ],
+      "@implementations/*": [
+        "src/impl/*"
+      ],
+      "@embeddings/*": [
+        "src/embeddings/*"
       ]
     }
   },
