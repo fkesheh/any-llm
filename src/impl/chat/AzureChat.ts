@@ -1,42 +1,35 @@
 import { ApiError } from '@models/ApiError'
-import { checkAndGetEnv } from '@util/ServerChatHelpers'
+import { ChatBase } from '@models/Base'
 import {
   ApiKeyValues,
   ChatMessage,
   LLMSettings,
   validEnviromentKeys,
 } from '@models/types'
+import { checkAndGetEnv } from '@util/ServerChatHelpers'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
-import { ChatClientBase } from '@models/ChatClientBase'
-import { OpenAIChatClient } from './OpenAIChatClient'
 import { Stream } from 'openai/streaming'
+import { OpenAIChat } from './OpenAIChat'
 
-export class AzureChatClient extends ChatClientBase {
+export class AzureChat extends ChatBase {
   private azureOpenai: OpenAI | undefined
   private apiKeyValues: ApiKeyValues | undefined
 
-  async initialize(apiKeyValues: ApiKeyValues) {
-    this.apiKeyValues = apiKeyValues
-    const azureOpenaiApiKey = checkAndGetEnv(
-      apiKeyValues,
-      validEnviromentKeys.AZURE_OPENAI_API_KEY,
-    )
-    const azureOpenaiEndpoint = checkAndGetEnv(
-      apiKeyValues,
-      validEnviromentKeys.AZURE_OPENAI_ENDPOINT,
-    )
-    const deploymentId = checkAndGetEnv(
-      apiKeyValues,
-      validEnviromentKeys.AZURE_OPENAI_DEPLOYMENT_ID,
-    )
-
+  constructor(
+    azureOpenaiApiKey: string,
+    azureOpenaiEndpoint: string,
+    deploymentId: string,
+    apiKeyValues: ApiKeyValues,
+  ) {
+    super()
     this.azureOpenai = new OpenAI({
       apiKey: azureOpenaiApiKey,
       baseURL: `${azureOpenaiEndpoint}/openai/deployments/${deploymentId}`,
       defaultQuery: { 'api-version': '2023-12-01-preview' },
       defaultHeaders: { 'api-key': azureOpenaiApiKey },
     })
+    this.apiKeyValues = apiKeyValues
   }
 
   async generateChatCompletion(
@@ -79,7 +72,7 @@ export class AzureChatClient extends ChatClientBase {
 
     return this.azureOpenai.chat.completions.create({
       model: deploymentId,
-      messages: messages.map(OpenAIChatClient.messageConversion),
+      messages: messages.map(OpenAIChat.messageConversion),
       temperature: chatSettings.temperature,
       max_tokens: this.getMaxGeneratedTokens(chatSettings),
       stream: true,
@@ -92,20 +85,5 @@ export class AzureChatClient extends ChatClientBase {
   ): Promise<StreamingTextResponse> {
     const response = await this.generateChatCompletion(chatSettings, messages)
     return new StreamingTextResponse(OpenAIStream(response))
-  }
-
-  handleError(error: ApiError): ApiError {
-    let errorMessage = error.message || 'An unexpected error occurred'
-    const errorCode = error.status || 500
-
-    if (errorMessage.toLowerCase().includes('api key not found')) {
-      errorMessage =
-        'Azure OpenAI API Key not found. Please set it in your profile settings.'
-    } else if (errorMessage.toLowerCase().includes('incorrect api key')) {
-      errorMessage =
-        'Azure OpenAI API Key is incorrect. Please fix it in your profile settings.'
-    }
-
-    return new ApiError(errorMessage, errorCode)
   }
 }

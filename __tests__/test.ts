@@ -1,11 +1,99 @@
 import { beforeEach, describe, expect, it } from '@jest/globals' // Basic Jest testing functions
-import { ChatClient } from '../src/ChatClient'
+import { Client } from '../src/Client'
 import { ChatModels } from '../src/chatModels/ChatModels'
 import { loadApiKeyValuesFromEnvironment } from '../src/util/LoadApiKeys'
 import { ApiKeyValues, ChatMessage, ChatRoles } from '../src/models/types'
+import { AnthropicTokenizer } from '../src/impl/tokenizer/AnthropicTokenizer'
+import { Llama2Tokenizer } from '../src/impl/tokenizer/Llama2Tokenizer'
+import { OpenAITokenizer } from '../src/impl/tokenizer/OpenAITokenizer'
+import { TokenizerBase } from '../src/models/Base'
+
+describe('AntropicTokenizer', () => {
+  let tokenizer: TokenizerBase
+
+  beforeEach(() => {
+    tokenizer = new AnthropicTokenizer()
+  })
+
+  it('should encode text into tokens correctly', () => {
+    const text = 'Hello, world!'
+    const encoded = tokenizer.encode(text)
+    expect(encoded).toBeInstanceOf(Array)
+    expect(encoded.length).toBeGreaterThan(0)
+  })
+
+  it('should decode tokens back into text correctly', () => {
+    const tokens = [10002, 16, 2253, 5]
+    const decoded = tokenizer.decode(tokens)
+    expect(decoded).toBe('Hello, world!')
+  })
+
+  it('should count tokens correctly', () => {
+    const text = 'This is a test.'
+    const tokenCount = tokenizer.countTokens(text)
+    expect(tokenCount).toBeGreaterThan(0)
+    expect(tokenCount).toBeLessThanOrEqual(text.length)
+  })
+})
+
+describe('Llama2Tokenizer', () => {
+  let tokenizer: TokenizerBase
+
+  beforeEach(() => {
+    tokenizer = new Llama2Tokenizer()
+  })
+
+  it('should encode text into tokens correctly', () => {
+    const text = 'Potato potato tomato potato.'
+    const encoded = tokenizer.encode(text)
+    expect(encoded).toBeInstanceOf(Array)
+    expect(encoded.length).toEqual(10)
+  })
+
+  it('should decode tokens back into text correctly', () => {
+    const tokens = [
+      6850, 17469, 28709, 2513, 1827, 6679, 1827, 2513, 1827, 28723,
+    ]
+    const decoded = tokenizer.decode(tokens)
+    expect(decoded).toBe('Potato potato tomato potato.')
+  })
+
+  it('should count tokens correctly', () => {
+    const text = 'Potato potato tomato potato.'
+    const tokenCount = tokenizer.countTokens(text)
+    expect(tokenCount).toEqual(10)
+  })
+})
+
+describe('OpenAITokenizer', () => {
+  let tokenizer: TokenizerBase
+
+  beforeEach(() => {
+    tokenizer = new OpenAITokenizer()
+  })
+
+  it('should encode text into tokens correctly', () => {
+    const text = 'Potato potato tomato potato.'
+    const encoded = tokenizer.encode(text)
+    expect(encoded).toBeInstanceOf(Array)
+    expect(encoded.length).toEqual(6)
+  })
+
+  it('should decode tokens back into text correctly', () => {
+    const tokens = [45716, 4428, 39834, 42120, 39834, 13]
+    const decoded = tokenizer.decode(tokens)
+    expect(decoded).toBe('Potato potato tomato potato.')
+  })
+
+  it('should count tokens correctly', () => {
+    const text = 'Potato potato tomato potato.'
+    const tokenCount = tokenizer.countTokens(text)
+    expect(tokenCount).toEqual(6)
+  })
+})
 
 describe('ChatClientProxy', () => {
-  let chatClientProxy: ChatClient
+  let chatClientProxy: Client
   let mockApiKeyValues: ApiKeyValues
   const providers = Object.keys(ChatModels)
   const mockMessages: ChatMessage[] = [
@@ -18,13 +106,12 @@ describe('ChatClientProxy', () => {
   beforeEach(() => {
     mockApiKeyValues = loadApiKeyValuesFromEnvironment()
   })
-
   providers
     .filter((provider) => provider !== 'azure')
     .forEach((provider) => {
       describe(`${provider} provider`, () => {
         beforeEach(() => {
-          chatClientProxy = new ChatClient(provider, mockApiKeyValues)
+          chatClientProxy = new Client(provider, mockApiKeyValues)
         })
 
         const models = Object.keys(ChatModels[provider])

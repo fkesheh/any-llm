@@ -26,12 +26,26 @@ const MIXTRAL_8X7B: ChatModel = {
   maxContextLength: 32768,
 }
 
+const GEMMA_7B: ChatModel = {
+  modelId: 'gemma-7b-it',
+  modelName: 'Gemma 7b',
+  provider: ModelProvider.Groq,
+  platformLink: GROQ_PLATFORM_LINK,
+  imageInput: false,
+  minTemperature: 0.0,
+  maxTemperature: 1.0,
+  maxTokenOutputLength: 8192,
+  maxContextLength: 8192,
+}
+
 type GroqChatModelsType = {
   MIXTRAL_8X7B: ChatModel
   LLaMA2_70B: ChatModel
+  GEMMA_7B: ChatModel
 }
 
 export const GroqChatModels: GroqChatModelsType = {
   MIXTRAL_8X7B,
   LLaMA2_70B,
+  GEMMA_7B,
 }

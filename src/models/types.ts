@@ -9,19 +9,36 @@ export enum ModelProvider {
   OpenRouter = 'OpenRouter',
   Cohere = 'Cohere',
   Azure = 'Azure',
+  VoyageAI = 'VoyageAI',
 }
 
-export interface ChatModel {
+export interface BaseModel {
   modelId: string
   modelName: string
   provider: ModelProvider
   platformLink: string
+  maxContextLength: number
+}
+
+export interface ChatModel extends BaseModel {
   imageInput: boolean
   minTemperature: number
   maxTemperature: number
   maxTokenOutputLength: number
-  maxContextLength: number
 }
+
+export interface EmbeddingModel extends BaseModel {
+  dimensions: number | number[]
+  maxInputs: number
+  queryMode?: string
+  documentMode?: string
+  classificationMode?: string
+  clusteringMode?: string
+  truncationAvailable: boolean
+  encodingFormats: string[]
+}
+
+export type EmbeddingResult = { vectors: number[][]; tokensProcessed: number }
 
 export interface OpenRouterLLM extends ChatModel {
   maxContext: number
@@ -37,6 +54,7 @@ export enum validEnviromentKeys {
   COHERE_API_KEY = 'COHERE_API_KEY',
   AZURE_OPENAI_API_KEY = 'AZURE_OPENAI_API_KEY',
   OPENROUTER_API_KEY = 'OPENROUTER_API_KEY',
+  VOYAGE_API_KEY = 'VOYAGE_API_KEY',
 
   OPENAI_ORGANIZATION_ID = 'OPENAI_ORGANIZATION_ID',
 

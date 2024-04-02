@@ -6,19 +6,20 @@ import {
   ModelProvider,
 } from '@models/types'
 import { StreamingTextResponse } from 'ai'
-import { ChatClientBase } from '@models/ChatClientBase'
-import { AnthropicChatClient } from '@implementations/AnthropicChatClient'
-import { AzureChatClient } from '@implementations/AzureChatClient'
-import { CohereChatClient } from '@implementations/CohereChatClient'
-import { GoogleChatClient } from '@implementations/GoogleChatClient'
-import { GroqChatClient } from '@implementations/GroqChatClient'
-import { MistralChatClient } from '@implementations/MistralChatClient'
-import { OpenAIChatClient } from '@implementations/OpenAIChatClient'
-import { OpenRouterChatClient } from '@implementations/OpenRouterChatClient'
-import { PerplexityChatClient } from '@implementations/PerplexityChatClient'
+import { ClientBase } from '@models/Base'
+import { AnthropicClient } from '@implementations/AnthropicClient'
+import { AzureClient } from '@implementations/AzureClient'
+import { CohereClient } from '@implementations/CohereClient'
+import { GoogleClient } from '@implementations/GoogleClient'
+import { GroqClient } from '@implementations/GroqClient'
+import { MistralClient } from '@implementations/MistralClient'
+import { OpenAIClient } from '@implementations/OpenAIClient'
+import { OpenRouterClient } from '@implementations/OpenRouterClient'
+import { PerplexityClient } from '@implementations/PerplexityClient'
+import { VoyageAIClient } from '@implementations/VoyageAIClient'
 
-export class ChatClient {
-  private chatClient: ChatClientBase | undefined
+export class Client {
+  private client: ClientBase | undefined
   private provider: ModelProvider
   private apiKeyValues: ApiKeyValues
 
@@ -30,54 +31,56 @@ export class ChatClient {
   private initialize() {
     switch (this.provider) {
       case ModelProvider.OpenAI:
-        this.chatClient = new OpenAIChatClient()
+        this.client = new OpenAIClient()
         break
       case ModelProvider.Azure:
-        this.chatClient = new AzureChatClient()
+        this.client = new AzureClient()
         break
       case ModelProvider.Groq:
-        this.chatClient = new GroqChatClient()
+        this.client = new GroqClient()
         break
       case ModelProvider.Google:
-        this.chatClient = new GoogleChatClient()
+        this.client = new GoogleClient()
         break
       case ModelProvider.Mistral:
-        this.chatClient = new MistralChatClient()
+        this.client = new MistralClient()
         break
       case ModelProvider.Anthropic:
-        this.chatClient = new AnthropicChatClient()
+        this.client = new AnthropicClient()
         break
       case ModelProvider.OpenRouter:
-        this.chatClient = new OpenRouterChatClient()
+        this.client = new OpenRouterClient()
         break
       case ModelProvider.Perplexity:
-        this.chatClient = new PerplexityChatClient()
+        this.client = new PerplexityClient()
         break
       case ModelProvider.Cohere:
-        this.chatClient = new CohereChatClient()
+        this.client = new CohereClient()
+        break
+      case ModelProvider.VoyageAI:
+        this.client = new VoyageAIClient()
         break
       default:
         throw new Error('Provider not found')
     }
-    return this.chatClient?.initialize(this.apiKeyValues)
+    return this.client?.initialize(this.apiKeyValues)
   }
 
   async createChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
   ): Promise<StreamingTextResponse> {
-    if (!this.chatClient) {
+    if (!this.client) {
       await this.initialize()
     }
-    if (!this.chatClient) {
+    if (!this.client) {
       throw new Error('Chat client not initialized')
     }
 
     try {
-      return await this.chatClient.generateChatCompletionStream(
-        chatSettings,
-        messages,
-      )
+      return await this.client
+        .chat()
+        .generateChatCompletionStream(chatSettings, messages)
     } catch (error) {
       if (error instanceof ApiError) {
         return this.handleError(error)
@@ -93,17 +96,16 @@ export class ChatClient {
     chatSettings: LLMSettings,
     messages: ChatMessage[],
   ): Promise<string> {
-    if (!this.chatClient) {
+    if (!this.client) {
       await this.initialize()
     }
-    if (!this.chatClient) {
+    if (!this.client) {
       throw new Error('Chat client not initialized')
     }
 
-    const stream = await this.chatClient.generateChatCompletionStream(
-      chatSettings,
-      messages,
-    )
+    const stream = await this.client
+      .chat()
+      .generateChatCompletionStream(chatSettings, messages)
     return stream.text()
   }
 
@@ -130,8 +132,8 @@ export class ChatClient {
     }
   }
   private handleError(error: ApiError): Response {
-    if (this.chatClient && 'handleError' in this.chatClient) {
-      error = this.chatClient.handleError(error)
+    if (this.client && 'handleError' in this.client) {
+      error = this.client.handleError(error)
     }
 
     const errorMessage = error.message || 'An unexpected error occurred'

@@ -1,6 +1,6 @@
 import { Content, GoogleGenerativeAI, Part, Role } from '@google/generative-ai'
 import { ApiError } from '@models/ApiError'
-import { checkAndGetEnv } from '@util/ServerChatHelpers'
+import { ClientBase } from '@models/Base'
 import {
   ApiKeyValues,
   ChatMessage,
@@ -8,10 +8,10 @@ import {
   LLMSettings,
   validEnviromentKeys,
 } from '@models/types'
+import { checkAndGetEnv } from '@util/ServerChatHelpers'
 import { GoogleGenerativeAIStream, StreamingTextResponse } from 'ai'
-import { ChatClientBase } from '@models/ChatClientBase'
 
-export class GoogleChatClient extends ChatClientBase {
+export class GoogleClient extends ClientBase {
   private googleAI: GoogleGenerativeAI | undefined
 
   async initialize(apiKeyValues: ApiKeyValues) {
@@ -46,7 +46,7 @@ export class GoogleChatClient extends ChatClientBase {
     }
     return {
       parts,
-      role: GoogleChatClient.toGoogleRole(message.role),
+      role: GoogleClient.toGoogleRole(message.role),
     }
   }
 
@@ -67,7 +67,7 @@ export class GoogleChatClient extends ChatClientBase {
       },
     )
 
-    const googleMessages = messages.map(GoogleChatClient.convertMessages)
+    const googleMessages = messages.map(GoogleClient.convertMessages)
 
     if (googleMessages[messages.length - 1].role === 'model') messages.pop()
 

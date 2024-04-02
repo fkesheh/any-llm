@@ -25,18 +25,18 @@ Here's a quick overview of how to interact with different LLM providers through 
 
 ```typescript
 import {
-  ChatClient,
+  Client,
   ModelProvider,
   ChatModels,
   loadApiKeyValuesFromEnvironment,
 } from 'any-llm'
 
-const chatClient = new ChatClient(
+const client = new Client(
   ModelProvider.Google,
   loadApiKeyValuesFromEnvironment(),
 )
 // or give the value of the key (check .env.sample for the valid environment keys)
-const chatClient = new ChatClient(ModelProvider.Google, {
+const client = new ChatClient(ModelProvider.Google, {
   GOOGLE_GEMINI_API_KEY: 'your-key',
 })
 ```
@@ -46,7 +46,7 @@ const chatClient = new ChatClient(ModelProvider.Google, {
 
    ```typescript
    // NonStreaming Mode - String
-   const msg = await chatClient.createChatCompletionNonStreaming(
+   const msg = await client.createChatCompletionNonStreaming(
      {
        model: ChatModels.Google.GEMINI_1_0_PRO,
        max_tokens: 4096,
@@ -61,7 +61,7 @@ const chatClient = new ChatClient(ModelProvider.Google, {
    )
 
    // Streaming Mode - StreamingTextResponse
-   const msg = await chatClient.createChatCompletion(
+   const msg = await client.createChatCompletion(
      {
        model: ChatModels.Google.GEMINI_1_0_PRO,
        max_tokens: 4096,
@@ -79,6 +79,8 @@ const chatClient = new ChatClient(ModelProvider.Google, {
 ## Available Models and Providers
 
 The following models and providers are currently supported:
+
+### Chat Models
 
 - **OpenAI Models:**
 
@@ -112,6 +114,7 @@ The following models and providers are currently supported:
 
   - `llama2-70b-4096`: LLaMA2-70b
   - `mixtral-8x7b-32768`: Mixtral-8x7b
+  - `gemma-7b-it`: Gemma 7b
 
 - **Perplexity Models:**
   - `pplx-7b-online`: Perplexity Online 7B
@@ -128,6 +131,21 @@ The following models and providers are currently supported:
   - `sonar-medium-chat`: Sonar Medium Chat
   - `sonar-medium-online`: Sonar Medium Online
 
+### Embedding Models
+
+- **VoyageAI Embedding Models:**
+  - `voyage-large-2`: Voyage Large 2
+  - `voyage-code-2`: Voyage Code 2
+  - `voyage-2`: Voyage 2
+  - `voyage-lite-02-instruct`: Voyage Lite 02 Instruct
+
+### Tokenizers
+
+- Anthropic Tokenizer
+- Llama2 Tokenizer
+- OpenAI Tokenizer
+
+
 Please refer to the respective documentation for more details on each model and provider.
 
 ## Project Status
@@ -136,12 +154,13 @@ Please refer to the respective documentation for more details on each model and 
   - [x] Text generation
   - [ ] Docs (in context learning)
   - [ ] Images
-- [ ] Embeddings
-  - [ ] For text (general, query, retrieval)
+- [x] Embeddings
+  - [x] For text (general, query, retrieval)
   - [ ] For images
 - [ ] Images
   - [ ] Image description
   - [ ] Images generation
+- [X] Tokenizers
 - [ ] Chunking
   - [ ] Text chunking
 - - [ ] Images reshape and chunk

@@ -1,33 +1,19 @@
-import { ApiError } from '@models/ApiError'
-import { checkAndGetEnv, getEnv } from '@util/ServerChatHelpers'
-import {
-  ApiKeyValues,
-  ChatMessage,
-  LLMSettings,
-  TextPart,
-  validEnviromentKeys,
-} from '@models/types'
+import { ChatBase } from '@models/Base'
+import { ChatMessage, LLMSettings, TextPart } from '@models/types'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
 import OpenAI from 'openai'
 import { ChatCompletionMessageParam } from 'openai/resources'
-import { ChatClientBase } from '@models/ChatClientBase'
 import { Stream } from 'openai/streaming'
 
-export class OpenAIChatClient extends ChatClientBase {
+export class OpenAIChat extends ChatBase {
   private openai: OpenAI | undefined
 
-  async initialize(apiKeyValues: ApiKeyValues) {
-    const openAiApiKey = checkAndGetEnv(
-      apiKeyValues,
-      validEnviromentKeys.OPENAI_API_KEY,
-    )
-    const openAiOrganizationId = getEnv(
-      apiKeyValues,
-      validEnviromentKeys.OPENAI_ORGANIZATION_ID,
-    )
+  constructor(apiKey: string, baseURL?: string, organization?: string) {
+    super()
     this.openai = new OpenAI({
-      apiKey: openAiApiKey,
-      organization: openAiOrganizationId,
+      apiKey,
+      organization,
+      baseURL,
     })
   }
 
@@ -55,7 +41,7 @@ export class OpenAIChatClient extends ChatClientBase {
 
     return this.openai.chat.completions.create({
       model: chatSettings.model.modelId,
-      messages: messages.map(OpenAIChatClient.messageConversion),
+      messages: messages.map(OpenAIChat.messageConversion),
       temperature: chatSettings.temperature,
       max_tokens: this.getMaxGeneratedTokens(chatSettings),
       stream: true,
@@ -68,20 +54,5 @@ export class OpenAIChatClient extends ChatClientBase {
   ): Promise<StreamingTextResponse> {
     const response = await this.generateChatCompletion(chatSettings, messages)
     return new StreamingTextResponse(OpenAIStream(response))
-  }
-
-  handleError(error: ApiError): ApiError {
-    let errorMessage = error.message || 'An unexpected error occurred'
-    const errorCode = error.status || 500
-
-    if (errorMessage.toLowerCase().includes('api key not found')) {
-      errorMessage =
-        'OpenAI API Key not found. Please set it in your profile settings.'
-    } else if (errorMessage.toLowerCase().includes('incorrect api key')) {
-      errorMessage =
-        'OpenAI API Key is incorrect. Please fix it in your profile settings.'
-    }
-
-    return new ApiError(errorMessage, errorCode)
   }
 }
