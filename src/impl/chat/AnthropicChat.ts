@@ -1,10 +1,14 @@
-import Anthropic from "@anthropic-ai/sdk";
-import { MessageParam } from "@anthropic-ai/sdk/resources";
-import { Stream } from "@anthropic-ai/sdk/streaming";
-import { ChatBase } from "@models/Base";
-import { ChatMessage, ChatRoles, LLMSettings, SystemChatMessage } from "@models/types";
-import { AnthropicStream, StreamingTextResponse } from "ai";
-
+import Anthropic from '@anthropic-ai/sdk'
+import { MessageParam } from '@anthropic-ai/sdk/resources'
+import { Stream } from '@anthropic-ai/sdk/streaming'
+import { ChatBase } from '@models/Base'
+import {
+  ChatMessage,
+  ChatRoles,
+  LLMSettings,
+  SystemChatMessage,
+} from '@models/types'
+import { AnthropicStream, StreamingTextResponse } from 'ai'
 
 export class AnthropicChat extends ChatBase {
   private anthropic: Anthropic | undefined
@@ -16,7 +20,6 @@ export class AnthropicChat extends ChatBase {
       apiKey,
     })
   }
-
 
   async generateChatCompletion(
     chatSettings: LLMSettings,

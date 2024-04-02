@@ -12,7 +12,7 @@ const EMBED_ENGLISH_V3: EmbeddingModel = {
   dimensions: 1024,
   maxInputs: 96,
   truncationAvailable: true,
-  encodingFormats: ['float', 'int8', 'uint8', 'binary', 'ubinary']
+  encodingFormats: ['float', 'int8', 'uint8', 'binary', 'ubinary'],
 }
 
 const EMBED_ENGLISH_LIGHT_V3: EmbeddingModel = {

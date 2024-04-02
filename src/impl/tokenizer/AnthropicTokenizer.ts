@@ -5,7 +5,7 @@ import claude from './data/claude.json'
 export class AnthropicTokenizer implements TokenizerBase {
   private tokenizer: Tiktoken
 
-  constructor() {    
+  constructor() {
     this.tokenizer = new Tiktoken(
       claude.bpe_ranks,
       claude.special_tokens,

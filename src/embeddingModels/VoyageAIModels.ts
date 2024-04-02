@@ -58,7 +58,6 @@ const VOYAGE_LITE_02_INSTRUCT: EmbeddingModel = {
   encodingFormats: ['float'],
 }
 
-
 export const VoyageAIEmbeddingModels = {
   VOYAGE_LARGE_2,
   VOYAGE_CODE_2,

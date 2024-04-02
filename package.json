@@ -1,6 +1,6 @@
 {
   "name": "any-llm",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "A seamless typescript abstraction layer between your application and various Language Learning Model (LLM) providers.",
   "repository": {
     "type": "git",
@@ -14,7 +14,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "rm dist -rf && tsc && tsc-alias --dir src",
+    "build": "rm dist -rf && tsc && tsc-alias",
     "prettier": "prettier --write src",
     "lint": "eslint . --ext .ts",
     "prePublish": "npm run build && npm run lint && npm run prettier",

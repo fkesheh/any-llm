@@ -71,5 +71,4 @@ export abstract class ClientBase {
     }
     return this.embeddingsClient
   }
-
 }
