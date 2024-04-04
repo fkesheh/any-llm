@@ -14,7 +14,7 @@ module.exports = {
           '@models': './src/models',
           '@types': './src/types',
           '@implementations': './src/impl',
-          '@embeddings': './src/embeddings',
+          '@embeddingModels': './src/embeddingModels',
         },
       },
     ],

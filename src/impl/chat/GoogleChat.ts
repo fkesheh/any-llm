@@ -1,8 +1,7 @@
-import { Content, GoogleGenerativeAI, Part, Role } from "@google/generative-ai";
-import { ChatBase } from "@models/Base";
-import { ChatMessage, ChatRoles, LLMSettings } from "@models/types";
-import { GoogleGenerativeAIStream, StreamingTextResponse } from "ai";
-
+import { Content, GoogleGenerativeAI, Part, Role } from '@google/generative-ai'
+import { ChatBase } from '@models/Base'
+import { ChatMessage, ChatRoles, LLMSettings } from '@models/types'
+import { GoogleGenerativeAIStream, StreamingTextResponse } from 'ai'
 
 export class GoogleChat extends ChatBase {
   private googleAI: GoogleGenerativeAI | undefined
@@ -85,5 +84,4 @@ export class GoogleChat extends ChatBase {
     const chat = await this.generateChatCompletion(chatSettings, messages)
     return new StreamingTextResponse(chat)
   }
-
 }

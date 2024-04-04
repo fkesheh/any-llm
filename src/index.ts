@@ -10,6 +10,7 @@ export { ApiError } from '@models/ApiError'
 
 export { AnthropicChatModels } from '@chatModels/AnthropicChatModels'
 export { ChatModels } from '@chatModels/ChatModels'
+export { EmbeddingModels } from '@embeddingModels/EmbeddingModels'
 export { CohereChatModels } from '@chatModels/CohereChatModels'
 export { GoogleChatModels } from '@chatModels/GoogleChatModels'
 export { GroqChatModels } from '@chatModels/GroqChatModels'

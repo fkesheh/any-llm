@@ -1,6 +1,6 @@
 {
   "name": "any-llm",
-  "version": "0.1.22",
+  "version": "0.1.26",
   "description": "A seamless typescript abstraction layer between your application and various Language Learning Model (LLM) providers.",
   "repository": {
     "type": "git",
@@ -61,8 +61,8 @@
       "@implementations/*": [
         "src/impl/*"
       ],
-      "@embeddings/*": [
-        "src/embeddings/*"
+      "@embeddingModels/*": [
+        "src/embeddingModels/*"
       ]
     }
   },

@@ -2,6 +2,8 @@ import { ApiError } from './models/ApiError'
 import {
   ApiKeyValues,
   ChatMessage,
+  EmbeddingModel,
+  EmbeddingResult,
   LLMSettings,
   ModelProvider,
 } from '@models/types'
@@ -19,7 +21,24 @@ import { PerplexityClient } from '@implementations/PerplexityClient'
 import { VoyageAIClient } from '@implementations/VoyageAIClient'
 
 export class Client {
-  private client: ClientBase | undefined
+  private client: ClientBase = {
+    chat: () => {
+      throw new Error('Client not initialized')
+    },
+    embeddings: () => {
+      throw new Error('Client not initialized')
+    },
+    chatClient: undefined,
+    embeddingsClient: undefined,
+    initialize: async () => {
+      throw new Error('Client not initialized')
+    },
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    handleError: (error: ApiError) => {
+      throw new Error('Client not initialized')
+    },
+  }
   private provider: ModelProvider
   private apiKeyValues: ApiKeyValues
 
@@ -66,18 +85,22 @@ export class Client {
     return this.client?.initialize(this.apiKeyValues)
   }
 
+  private async checkClient() {
+    if (!this.client.chatClient && !this.client.embeddingsClient) {
+      await this.initialize()
+    }
+    if (!this.client.chatClient && !this.client.embeddingsClient) {
+      throw new Error('Client failed initialization')
+    }
+  }
+
   async createChatCompletion(
     chatSettings: LLMSettings,
     messages: ChatMessage[],
   ): Promise<StreamingTextResponse> {
-    if (!this.client) {
-      await this.initialize()
-    }
-    if (!this.client) {
-      throw new Error('Chat client not initialized')
-    }
-
     try {
+      await this.checkClient()
+
       return await this.client
         .chat()
         .generateChatCompletionStream(chatSettings, messages)
@@ -96,12 +119,7 @@ export class Client {
     chatSettings: LLMSettings,
     messages: ChatMessage[],
   ): Promise<string> {
-    if (!this.client) {
-      await this.initialize()
-    }
-    if (!this.client) {
-      throw new Error('Chat client not initialized')
-    }
+    await this.checkClient()
 
     const stream = await this.client
       .chat()
@@ -142,5 +160,19 @@ export class Client {
     return new Response(JSON.stringify({ message: errorMessage }), {
       status: errorCode,
     })
+  }
+
+  async generateEmbeddings(
+    model: EmbeddingModel,
+    texts: string[],
+    truncation?: boolean,
+    dimensions?: number,
+    inputType?: 'query' | 'document',
+  ): Promise<EmbeddingResult> {
+    await this.checkClient()
+
+    return await this.client
+      .embeddings()
+      .generateEmbeddings(model, texts, truncation, dimensions, inputType)
   }
 }
