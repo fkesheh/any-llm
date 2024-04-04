@@ -83,20 +83,17 @@ The following models and providers are currently supported:
 ### Chat Models
 
 - **OpenAI Models:**
-
   - `gpt-4-turbo-preview`: GPT-4 Turbo
   - `gpt-4`: GPT-4
   - `gpt-3.5-turbo`: Updated GPT-3.5 Turbo
 
 - **Google Models:**
-
   - `gemini-1.0-pro`: Gemini 1.0 Pro
   - `gemini-1.0-pro-vision`: Gemini 1.0 Pro Vision
   - `gemini-1.5-pro-latest`: Gemini 1.5 Pro
   - `gemini-ultra`: Gemini 1.0 Ultra
 
 - **Anthropic Models:**
-
   - `claude-2.1`: Claude 2
   - `claude-instant-1.2`: Claude Instant
   - `claude-3-haiku-20240307`: Claude 3 Haiku
@@ -104,14 +101,12 @@ The following models and providers are currently supported:
   - `claude-3-opus-20240229`: Claude 3 Opus
 
 - **Mistral Models:**
-
   - `mistral-tiny`: Mistral Tiny
   - `mistral-small`: Mistral Small
   - `mistral-medium`: Mistral Medium
   - `mistral-large-2402`: Mistral Large
 
 - **Groq Models:**
-
   - `llama2-70b-4096`: LLaMA2-70b
   - `mixtral-8x7b-32768`: Mixtral-8x7b
   - `gemma-7b-it`: Gemma 7b
@@ -130,6 +125,14 @@ The following models and providers are currently supported:
   - `sonar-small-online`: Sonar Small Online
   - `sonar-medium-chat`: Sonar Medium Chat
   - `sonar-medium-online`: Sonar Medium Online
+
+- **Cohere Models:**
+  - `command-light`: Command Light
+  - `command-light-nightly`: Command Light Nightly
+  - `command`: Command
+  - `command-nightly`: Command Nightly
+  - `command-r`: Command-R
+
 
 ### Embedding Models
 
