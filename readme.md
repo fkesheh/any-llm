@@ -21,7 +21,7 @@ Here's a quick overview of how to interact with different LLM providers through 
     ```
 
 2.  **Initialize the Chat Client Proxy**:
-    First, create an instance of `ChatClientProxy` by specifying the provider you wish to use. This is done by passing the provider's name to the `ChatClientProxy` constructor.
+    First, create an instance of `Client` by specifying the provider you wish to use. This is done by passing the provider's name to the `Client` constructor.
 
 ```typescript
 import {
@@ -36,7 +36,7 @@ const client = new Client(
   loadApiKeyValuesFromEnvironment(),
 )
 // or give the value of the key (check .env.sample for the valid environment keys)
-const client = new ChatClient(ModelProvider.Google, {
+const client = new Client(ModelProvider.Google, {
   GOOGLE_GEMINI_API_KEY: 'your-key',
 })
 ```
