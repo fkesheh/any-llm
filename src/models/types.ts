@@ -119,3 +119,25 @@ export enum ChatRoles {
   System = 'system',
   Assistant = 'assistant',
 }
+
+type LangChainCodeSplitters =
+  | 'cpp'
+  | 'go'
+  | 'java'
+  | 'js'
+  | 'php'
+  | 'proto'
+  | 'python'
+  | 'rst'
+  | 'ruby'
+  | 'rust'
+  | 'scala'
+  | 'swift'
+  | 'markdown'
+  | 'latex'
+  | 'html'
+  | 'sol'
+
+type OtherSplitter = 'text' | 'sql'
+
+export type SplitterType = LangChainCodeSplitters | OtherSplitter

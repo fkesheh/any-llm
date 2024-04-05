@@ -20,6 +20,11 @@ export { PerplexityChatModels } from '@chatModels/PerplexityChatModels'
 
 export { VoyageAIClient } from '@implementations/VoyageAIClient'
 
+export { splitString } from '@implementations/splitters/splitters'
+export { splitFile } from '@implementations/splitters/splitters'
+export { extensionToSplitterType } from '@implementations/splitters/SplitterUtils'
+
+
 export { loadApiKeyValuesFromEnvironment } from '@util/LoadApiKeys'
 
 export {
@@ -36,4 +41,5 @@ export {
   TextPart,
   UserChatMessage,
   validEnviromentKeys,
+  SplitterType,
 } from '@models/types'

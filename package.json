@@ -75,6 +75,9 @@
     "axios": "^1.6.8",
     "cohere-ai": "^7.9.0",
     "dotenv": "^16.4.5",
+    "html-to-md": "^0.8.5",
+    "langchain": "^0.1.31",
+    "mammoth": "^1.7.1",
     "openai": "^4.29.2",
     "tiktoken": "^1.0.13"
   },

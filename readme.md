@@ -164,8 +164,8 @@ Please refer to the respective documentation for more details on each model and 
   - [ ] Image description
   - [ ] Images generation
 - [X] Tokenizers
-- [ ] Chunking
-  - [ ] Text chunking
+- [X] Spltters
+  - [X] Text splitters
 - - [ ] Images reshape and chunk
 - [ ] Video
   - [ ] Transcription
